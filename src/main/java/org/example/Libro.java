@@ -6,11 +6,11 @@ public class Libro {
     private String autor;
     private String editorial;
     private int anioPublicacion;
-    private Categoria categoria;
+    private String categoria;
     private boolean estado = true; // true: disponible, false: prestado
 
     public Libro(String identificador, String titulo, String autor, String editorial,
-                 int anioPublicacion, Categoria categoria, boolean estado) {
+                 int anioPublicacion, String categoria, boolean estado) {
         this.identificador = identificador;
         this.titulo = titulo;
         this.autor = autor;
@@ -56,11 +56,11 @@ public class Libro {
         this.anioPublicacion = anioPublicacion;
     }
 
-    public Categoria getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
