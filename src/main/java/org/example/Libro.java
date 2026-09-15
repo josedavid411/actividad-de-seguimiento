@@ -7,17 +7,17 @@ public class Libro {
     private String editorial;
     private int anioPublicacion;
     private Categoria categoria;
-    private EstadoLibro estado;
+    private boolean estado = true; // true: disponible, false: prestado
 
     public Libro(String identificador, String titulo, String autor, String editorial,
-                 int anioPublicacion, Categoria categoria) {
+                 int anioPublicacion, Categoria categoria, boolean estado) {
         this.identificador = identificador;
         this.titulo = titulo;
         this.autor = autor;
         this.editorial = editorial;
         this.anioPublicacion = anioPublicacion;
         this.categoria = categoria;
-        this.estado = EstadoLibro.disponible;
+        this.estado = estado;
     }
 
     public String getIdentificador() {
@@ -64,8 +64,12 @@ public class Libro {
         this.categoria = categoria;
     }
 
-    public EstadoLibro getEstado() {
+    public boolean getEstado() {
         return estado;
+
     }
 
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
 }
