@@ -13,7 +13,7 @@ public class Cliente {
         this.nombre = nombre;
         this.telefono = telefono;
         this.direccion = direccion;
-        this.tieneLibroPrestado = false;
+        this.tieneLibroPrestado = false; //false no tiene libro prestado, true si tiene libro prestado
     }
 
     public String getDocumento() {

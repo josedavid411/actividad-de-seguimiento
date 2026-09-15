@@ -12,6 +12,34 @@ public class Prestamo {
         this.fechaPrestamo = fechaPrestamo;
     }
 
+public boolean validacionPrestamo() {
+        if (libro.getEstado() == false) {
+            System.out.println("El libro ya está prestado.");
+            return false;
+        }
+        if (cliente.tieneLibroPrestado()) {
+            System.out.println("El cliente ya tiene un libro prestado.");
+            return false;
+        }
+        return true;
+    }
+
+    public void realizarPrestamo() {
+        if (validacionPrestamo()) {
+            libro.setEstado(false);
+            cliente.setTieneLibroPrestado(true);
+
+            System.out.println("Préstamo realizado con éxito.");
+        } else {
+            System.out.println("No se pudo realizar el préstamo.");
+        }
+    }
+    public void devolverLibro() {
+        libro.setEstado(true);
+        cliente.setTieneLibroPrestado(false);
+        System.out.println("El libro ha sido devuelto.");
+    }
+
     public Libro getLibro() {
         return libro;
     }
