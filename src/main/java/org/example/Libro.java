@@ -7,7 +7,8 @@ public class Libro {
     private String editorial;
     private int anioPublicacion;
     private String categoria;
-    private boolean estado = true; // true: disponible, false: prestado
+    private boolean estado = true;
+    private boolean retirado;
 
     public Libro(String identificador, String titulo, String autor, String editorial,
                  int anioPublicacion, String categoria, boolean estado) {
@@ -18,6 +19,7 @@ public class Libro {
         this.anioPublicacion = anioPublicacion;
         this.categoria = categoria;
         this.estado = estado;
+        this.retirado = false;
     }
 
     public String getIdentificador() {
@@ -70,6 +72,28 @@ public class Libro {
     }
 
     public void setEstado(boolean estado) {
-        this.estado = estado;
+        if (!retirado) {
+            this.estado = estado;
+        }
+    }
+
+    public boolean estaRetirado() {
+        return retirado;
+    }
+
+    public void retirar() {
+        retirado = true;
+        estado = false;
+    }
+
+    public void mostrarInformacion() {
+        String estadoActual = retirado ? "Retirado" : (estado ? "Disponible" : "Prestado");
+        System.out.println("Identificador: " + identificador);
+        System.out.println("Titulo: " + titulo);
+        System.out.println("Autor: " + autor);
+        System.out.println("Editorial: " + editorial);
+        System.out.println("Año de publicacion: " + anioPublicacion);
+        System.out.println("Categoria: " + categoria);
+        System.out.println("Estado: " + estadoActual);
     }
 }

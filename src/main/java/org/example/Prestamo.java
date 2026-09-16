@@ -13,6 +13,10 @@ public class Prestamo {
     }
 
 public boolean validacionPrestamo() {
+    if (libro.estaRetirado()) {
+        System.out.println("El libro está retirado del inventario.");
+        return false;
+    }
         if (libro.getEstado() == false) {
             System.out.println("El libro ya está prestado.");
             return false;
@@ -35,9 +39,13 @@ public boolean validacionPrestamo() {
         }
     }
     public void devolverLibro() {
-        libro.setEstado(true);
-        cliente.setTieneLibroPrestado(false);
-        System.out.println("El libro ha sido devuelto.");
+        if (!libro.getEstado()) {
+            libro.setEstado(true);
+            cliente.setTieneLibroPrestado(false);
+            System.out.println("El libro ha sido devuelto.");
+        } else {
+            System.out.println("El libro no figura como prestado.");
+        }
     }
 
     public Libro getLibro() {
