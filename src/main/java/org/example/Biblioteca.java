@@ -1,11 +1,11 @@
 package org.example;
 
 import java.io.File;
-import java.io.FileInputStream;  // este lo puse para Leer archivo de manera mas sencilla santiagoooo
-import java.io.FileOutputStream; // Escribir archivo
-import java.io.IOException;// Manejo de excepciones
-import java.io.ObjectInputStream;// Leer un objeto de manera mas sencilla santiagoooo
-import java.io.ObjectOutputStream;// Escribir un objeto de manera mas sencilla santiagoooo
+import java.io.FileInputStream; 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.time.LocalDate;
