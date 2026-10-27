@@ -1,6 +1,13 @@
 package org.example;
 
-public class Libro {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Libro implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String identificador;
     private String titulo;
     private String autor;
@@ -9,6 +16,8 @@ public class Libro {
     private String categoria;
     private boolean estado = true;
     private boolean retirado;
+    private final ArrayList<Cliente> reservas = new ArrayList<>();
+    private int cantidadPrestamos;
 
     public Libro(String identificador, String titulo, String autor, String editorial,
                  int anioPublicacion, String categoria, boolean estado) {
@@ -81,6 +90,38 @@ public class Libro {
         return retirado;
     }
 
+    public void registrarPrestamo() {
+        cantidadPrestamos++;
+    }
+
+    public int getCantidadPrestamos() {
+        return cantidadPrestamos;
+    }
+
+    public List<Cliente> getReservas() {
+        return Collections.unmodifiableList(reservas);
+    }
+
+    public Cliente getSiguienteReserva() {
+        return reservas.isEmpty() ? null : reservas.get(0);
+    }
+
+    public boolean agregarReserva(Cliente cliente) {
+        for (Cliente reserva : reservas) {
+            if (reserva.getDocumento().equals(cliente.getDocumento())) {
+                return false;
+            }
+        }
+        reservas.add(cliente);
+        return true;
+    }
+
+    public void retirarReserva(Cliente cliente) {
+        if (!reservas.isEmpty() && reservas.get(0).getDocumento().equals(cliente.getDocumento())) {
+            reservas.remove(0);
+        }
+    }
+
     public void retirar() {
         retirado = true;
         estado = false;
@@ -95,5 +136,6 @@ public class Libro {
         System.out.println("Año de publicacion: " + anioPublicacion);
         System.out.println("Categoria: " + categoria);
         System.out.println("Estado: " + estadoActual);
+        System.out.println("Reservas pendientes: " + reservas.size());
     }
 }

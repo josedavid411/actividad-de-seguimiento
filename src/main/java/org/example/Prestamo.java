@@ -1,15 +1,26 @@
 package org.example;
-import java.time.LocalDate;
 
-public class Prestamo {
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
+public class Prestamo implements Serializable {
+    private static final long serialVersionUID = 1L;
+    public static final int DIAS_PRESTAMO = 14;
+    public static final int MULTA_POR_DIA = 1000;
+
     private final Libro libro;
     private final Cliente cliente;
     private final LocalDate fechaPrestamo;
+    private final LocalDate fechaLimite;
+    private LocalDate fechaDevolucion;
+    private int multa;
 
     public Prestamo(Libro libro, Cliente cliente, LocalDate fechaPrestamo) {
         this.libro = libro;
         this.cliente = cliente;
         this.fechaPrestamo = fechaPrestamo;
+        this.fechaLimite = fechaPrestamo.plusDays(DIAS_PRESTAMO);
     }
 
 public boolean validacionPrestamo() {
@@ -32,20 +43,40 @@ public boolean validacionPrestamo() {
         if (validacionPrestamo()) {
             libro.setEstado(false);
             cliente.setTieneLibroPrestado(true);
-
-            System.out.println("Préstamo realizado con éxito.");
+            System.out.println("Préstamo realizado con éxito. Fecha límite: " + fechaLimite);
         } else {
             System.out.println("No se pudo realizar el préstamo.");
         }
     }
+
     public void devolverLibro() {
-        if (!libro.getEstado()) {
-            libro.setEstado(true);
-            cliente.setTieneLibroPrestado(false);
-            System.out.println("El libro ha sido devuelto.");
-        } else {
+        devolverLibro(LocalDate.now());
+    }
+
+    public boolean devolverLibro(LocalDate fechaDevolucion) {
+        if (!estaActivo()) {
             System.out.println("El libro no figura como prestado.");
+            return false;
         }
+
+        this.fechaDevolucion = fechaDevolucion;
+        long diasRetraso = Math.max(0, ChronoUnit.DAYS.between(fechaLimite, fechaDevolucion));
+        this.multa = (int) (diasRetraso * MULTA_POR_DIA);
+        cliente.agregarMulta(multa);
+        libro.setEstado(true);
+        cliente.setTieneLibroPrestado(false);
+
+        System.out.println("El libro ha sido devuelto.");
+        if (multa > 0) {
+            System.out.println("Multa por " + diasRetraso + " dia(s) de retraso: $" + multa);
+        } else {
+            System.out.println("Devolucion realizada a tiempo. No se genero multa.");
+        }
+        return true;
+    }
+
+    public boolean estaActivo() {
+        return fechaDevolucion == null;
     }
 
     public Libro getLibro() {
@@ -58,5 +89,17 @@ public boolean validacionPrestamo() {
 
     public LocalDate getFechaPrestamo() {
         return fechaPrestamo;
+    }
+
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
+    }
+
+    public LocalDate getFechaDevolucion() {
+        return fechaDevolucion;
+    }
+
+    public int getMulta() {
+        return multa;
     }
 }

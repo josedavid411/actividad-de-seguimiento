@@ -21,7 +21,11 @@ public class Main {
             System.out.println("5. Prestar libro");
             System.out.println("6. Devolver libro");
             System.out.println("7. Retirar libro");
-            System.out.println("8. Salir");
+            System.out.println("8. Consultar multas de cliente");
+            System.out.println("9. Reservar libro");
+            System.out.println("10. Consultar reservas de libro");
+            System.out.println("11. Reporte general");
+            System.out.println("12. Salir");
             System.out.print("Seleccione una opcion: ");
 
             opcion = scanner.nextInt();
@@ -117,6 +121,33 @@ public class Main {
 
                 case 8:
 
+                    System.out.print("Documento del cliente: ");
+                    biblioteca.consultarMultas(scanner.nextLine());
+                    break;
+
+                case 9:
+
+                    System.out.println("\n RESERVAR LIBRO");
+                    System.out.print("Identificador del libro: ");
+                    String libroReserva = scanner.nextLine();
+                    System.out.print("Documento del cliente: ");
+                    String clienteReserva = scanner.nextLine();
+                    biblioteca.registrarReserva(libroReserva, clienteReserva);
+                    break;
+
+                case 10:
+
+                    System.out.print("Identificador del libro: ");
+                    biblioteca.consultarReservas(scanner.nextLine());
+                    break;
+
+                case 11:
+
+                    biblioteca.mostrarReporteGeneral();
+                    break;
+
+                case 12:
+
                     System.out.println("Saliendo del sistema...");
 
                     break;
@@ -126,7 +157,7 @@ public class Main {
                     System.out.println("Opcion no valida.");
             }
 
-        } while (opcion != 8);
+        } while (opcion != 12);
 
         scanner.close();
 

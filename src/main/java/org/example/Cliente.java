@@ -1,19 +1,25 @@
 package org.example;
 
-public class Cliente {
+import java.io.Serializable;
+
+public class Cliente implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String documento;
     private String nombre;
     private String telefono;
     private String direccion;
     private boolean tieneLibroPrestado;
+    private int multasPendientes;
 
     public Cliente(String documento, String nombre, String telefono, String direccion) {
         this.documento = documento;
         this.nombre = nombre;
         this.telefono = telefono;
         this.direccion = direccion;
-        this.tieneLibroPrestado = false; 
+        this.tieneLibroPrestado = false;
+        this.multasPendientes = 0;
     }
 
     public String getDocumento() {
@@ -40,6 +46,14 @@ public class Cliente {
         this.tieneLibroPrestado = tieneLibroPrestado;
     }
 
+    public int getMultasPendientes() {
+        return multasPendientes;
+    }
+
+    public void agregarMulta(int valor) {
+        multasPendientes += valor;
+    }
+
     public void mostrarInformacion() {
         System.out.println("Documento: " + documento);
         System.out.println("Nombre: " + nombre);
@@ -47,6 +61,6 @@ public class Cliente {
         System.out.println("Direccion: " + direccion);
         System.out.println("Tiene libro prestado: " +
                 (tieneLibroPrestado ? "Si" : "No"));
+        System.out.println("Multas pendientes: $" + multasPendientes);
     }
 }
-

@@ -1,10 +1,19 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.text.Normalizer;
+import java.io.Serializable;
 
-public class InventarioLibros {
+public class InventarioLibros implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private final ArrayList<Libro> libros = new ArrayList<>();
+
+	public List<Libro> getLibros() {
+		return Collections.unmodifiableList(libros);
+	}
 
 	public boolean registrarLibro(Libro libro) {
 		if (!categoriaValida(libro.getCategoria())) {
